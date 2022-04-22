@@ -5,20 +5,22 @@ const contributorController = require("../controllers/contributorController")();
 const expenseController = require("../controllers/expenseController")();
 
 function monthController() {
-  function post(req, res) {
+  async function post(req, res) {
     (async function InsertMonth() {
       try {
         //Validate
+        if (!req.body.id) {
+          res.status(400);
+          return res.send("Id is required");
+        }
         const results = await req.app.locals.db.query(
-          `select * from Months where name='${req.body.id}'`
+          `select * from Months where Id='${req.body.id}'`
         );
         if (results.rowsAffected[0] === 0) {
-          await req.app.locals.db.query(
-            `INSERT INTO Months (Id) VALUES ('${req.body.id}')`
-          );
           const results = await req.app.locals.db.query(
-            `select * from Months where id='${id}'`
+            `INSERT INTO Months (Id) VALUES ('${req.body.id}');select * from Months where id='${id}'`
           );
+
           res.status(201);
           return res.json(camelizeKeys(results.recordset[0]));
         } else {
@@ -31,7 +33,7 @@ function monthController() {
     })();
   }
 
-  function get(req, res) {
+  async function get(req, res) {
     (async function getMonths() {
       try {
         const results = await req.app.locals.db.query(
@@ -50,7 +52,7 @@ function monthController() {
           )
         );
       } catch (error) {
-        res.send(error.stack);
+        return res.send(error.stack);
       }
     })();
   }

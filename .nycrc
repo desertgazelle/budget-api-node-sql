@@ -1,0 +1,11 @@
+{
+  "all": true,
+  "include": [
+    "**/*.js"
+  ],
+  "exclude": [
+    "**/*.tests.js",
+    "app.js",
+    "local.config.js"
+  ]
+}

@@ -2,7 +2,7 @@ require("mssql");
 const camelizeKeys = require("../services/coreService");
 
 function distributionTypeController() {
-  function get(req, res) {
+  async function get(req, res) {
     (async function getDistributionTypes() {
       try {
         const results = await req.app.locals.db
@@ -14,7 +14,7 @@ function distributionTypeController() {
     })();
   }
 
-  function getOne(req, res) {
+  async function getOne(req, res) {
     (async function getDistributionType() {
       try {
         const results = await req.app.locals.db.query(
@@ -31,9 +31,7 @@ function distributionTypeController() {
     })();
   }
 
-  function applyDistribution(expense, contributors) {}
-
-  return { get, getOne, applyDistribution };
+  return { get, getOne };
 }
 
 module.exports = distributionTypeController;
